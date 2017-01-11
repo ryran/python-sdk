@@ -34,6 +34,10 @@ if pyver not in [(2, 6), (2, 7)] and pyver < (3, 3):
     raise ImportError('Python 2.6, 2.7 or 3.3+ is required')
 
 
+def is_rsaw_sdk():
+    pass
+
+
 __all__ = ['random_luid', 'update_luids', 'application_state', 'new_name',
            'RavelloError', 'RavelloClient']
 
