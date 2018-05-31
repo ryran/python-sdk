@@ -22,6 +22,7 @@ import json
 import random
 import requests
 import urllib
+from datetime import datetime
 
 # Python 2.x / 3.x module name differences
 try:
@@ -444,6 +445,12 @@ class RavelloClient(object):
                         continue
                 elif status == 404:
                     entity = None
+                elif status == 429 and self.retries:
+                    retries += 1
+                    if retries <= self.retries:
+                        self._logger.debug('got 429 client error (too many requests); will retry when minute rolls over')
+                        time.sleep(61 - datetime.now().second)
+                    continue
                 else:
                     response.raise_for_status()
                 response.entity = entity
